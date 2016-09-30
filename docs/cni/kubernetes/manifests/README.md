@@ -27,22 +27,31 @@ the following configuration parameters:
 
 ## Etcd Configuration
 
-### etcd_endpoints
+By default, these manifests do not configure secure access to etcd and assume an etcd proxy is running on each host.  The following configuration
+options let you specify custom etcd cluster endpoints as well as TLS.  
 
-The location of your etcd cluster.  The default in the provided manifest assumes that an etcd proxy is running on each node.
-
-### TLS configuraiton
-
-By default, these manfiests do not configure secure access to etcd.  To use these manifests with a TLS enabled etcd cluster you must do the following.
+To use these manifests with a TLS enabled etcd cluster you must do the following:
 
 - Populate the `calico-etcd-secrets` Secret with the following files: `etcd-ca`, `etcd-key`, `etcd-cert`.
-- Populate the following options in the ConfigMap, which will trigger the various services to expect the provided TLS assets:
-  - `etcd_ca`: The location of the CA mounted in the pods deployed by the DaemonSet. 
-    - Default: `/calico-secrets/etcd-ca`
-  - `etcd_key`: The location of the client cert mounted in the pods deployed by the DaemonSet. 
-    - Default: `/calico-secrets/etcd-cert`
-  - `etcd_cert`: The location of the client key mounted in the pods deployed by the DaemonSet. 
-    - Default: `/calico-secrets/etcd-key`
+- Populate the following options in the ConfigMap which will trigger the various services to expect the provided TLS assets: `etcd_ca`, `etcd_key`, `etcd_cert`
+
+### etcd_endpoints
+
+A comma separated list of etcd nodes. e.g `https://etcd0:2379,...` 
+
+The default in the provided manifest uses localhost, and assumes that an etcd proxy is running on each node.
+
+### etcd_ca 
+
+The location of the CA mounted in the pods deployed by the DaemonSet. To enable, set to `/calico-secrets/etcd-ca`
+
+### etcd_key
+
+`etcd_key`: The location of the client cert mounted in the pods deployed by the DaemonSet. To enable, set to `/calico-secrets/etcd-cert`
+
+### etcd_cert
+
+The location of the client key mounted in the pods deployed by the DaemonSet. To enable, set to `/calico-secrets/etcd-key`
 
 ## Other Configuration Options
 
