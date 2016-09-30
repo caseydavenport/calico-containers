@@ -21,16 +21,31 @@ data:
         "name": "k8s-pod-network",
         "type": "calico",
         "etcd_endpoints": "__ETCD_ENDPOINTS__",
+        "etcd_key_file": "__ETCD_KEY_FILE__",
+        "etcd_cert_file": "__ETCD_CERT_FILE__",
+        "etcd_ca_cert_file": "__ETCD_CA_CERT_FILE__",
         "log_level": "info",
         "ipam": {
             "type": "calico-ipam"
         },
         "policy": {
             "type": "k8s",
-             "k8s_api_root": "https://__KUBERNETES_SERVICE_HOST__:__KUBERNETES_SERVICE_PORT__",
-             "k8s_auth_token": "__SERVICEACCOUNT_TOKEN__"
+            "k8s_api_root": "https://__KUBERNETES_SERVICE_HOST__:__KUBERNETES_SERVICE_PORT__",
+            "k8s_auth_token": "__SERVICEACCOUNT_TOKEN__"
         },
         "kubernetes": {
-            "kubeconfig": "/etc/cni/net.d/__KUBECONFIG_FILENAME__"
+            "kubeconfig": "__KUBECONFIG_FILEPATH__"
         }
     }
+
+  # If you're using TLS enabled etcd, make sure you've defined 
+  # the correct assets in the Secret in calico-hosted.yaml, and 
+  # uncommented the follwing. 
+  etcd_ca: ""    # "/calico-secrets/etcd-ca"
+  etcd_cert: ""  # "/calico-secrets/etcd-cert"
+  etcd_key: ""   # "/calico-secrets/etcd-key"
+
+  # The location on the host where CNI network configs are installed.
+  # This must match the parameter on your kubelets, as well as the mount
+  # directory for the calico/cni container in calico-hosted.yaml
+  cni_net_dir: "/etc/cni/net.d"
