@@ -2,8 +2,8 @@
 
 This directory contains Kubernetes manifests to deploy Calico on top of Kubernetes.
 
-- `calico-configmap.yaml`: Contains a Kubernetes ConfigMap for configuring the deployment.  Make sure the values
-in this file match your desired configuration.
+- `calico-config.yaml`: Contains a Kubernetes ConfigMap for configuring the deployment.  Make sure the values
+in this file match your desired configuration. This also includes a Kubernetes Secret for configuring TLS for etcd access.
 
 - `calico-hosted.yaml`: Contains a Kubernetes DaemonSet which installs and runs Calico on each Kubernetes master and node.
 This also includes a ReplicaSet which deploys the Calico Kubernetes policy controller.
@@ -22,7 +22,7 @@ It does the following things:
 
 # Configuration options
 
-The `calico-configmap.yaml` provides a way to configure a Calico self-hosted installation.  It exposes
+The `calico-config.yaml` provides a way to configure a Calico self-hosted installation.  It exposes
 the following configuration parameters:
 
 ## Etcd Configuration
