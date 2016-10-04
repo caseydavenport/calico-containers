@@ -8,7 +8,6 @@ metadata:
   namespace: kube-system
 data:
   # Configure this with the location of your etcd cluster.
-  # This must also be configured in the cni_network_config below.
   etcd_endpoints: "http://127.0.0.1:2379"
 
   # True enables BGP networking, false tells Calico to enforce
@@ -38,14 +37,24 @@ data:
         }
     }
 
-  # If you're using TLS enabled etcd, make sure you've defined 
-  # the correct assets in the Secret in calico-hosted.yaml, and 
-  # uncommented the follwing. 
-  etcd_ca: ""    # "/calico-secrets/etcd-ca"
-  etcd_cert: ""  # "/calico-secrets/etcd-cert"
-  etcd_key: ""   # "/calico-secrets/etcd-key"
+  # If you're using TLS enabled etcd uncomment the following.
+  # You must also populate the Secret below with these files.
+  etcd_ca: ""   # "/calico-secrets/etcd-ca"
+  etcd_cert: "" # "/calico-secrets/etcd-cert"
+  etcd_key: ""  # "/calico-secrets/etcd-key"
 
-  # The location on the host where CNI network configs are installed.
-  # This must match the parameter on your kubelets, as well as the mount
-  # directory for the calico/cni container in calico-hosted.yaml
-  cni_net_dir: "/etc/cni/net.d"
+---
+
+# The following contains k8s Secrets for use with a TLS enabled etcd cluster.
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: calico-etcd-secrets
+  namespace: kube-system
+data:
+  # Populate the following files with etcd TLS configuration if desired.
+  # This self-hosted install expects three files with the following names.
+  # etcd-key: null
+  # etcd-cert: null
+  # etcd-ca: null

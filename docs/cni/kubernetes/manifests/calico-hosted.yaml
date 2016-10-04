@@ -194,19 +194,3 @@ spec:
         - name: etcd-certs
           secret:
             secretName: calico-etcd-secrets
-
----
-
-# The following contains k8s Secrets for use with a TLS enabled etcd cluster.
-apiVersion: v1
-kind: Secret
-type: Opaque
-metadata:
-  name: calico-etcd-secrets
-  namespace: kube-system
-data:
-  # Populate the following files with etcd TLS configuration if desired.
-  # This self-hosted install expects three files with the following names.
-  # etcd-key: null
-  # etcd-cert: null
-  # etcd-ca: null
