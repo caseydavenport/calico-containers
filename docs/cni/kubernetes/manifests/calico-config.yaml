@@ -8,7 +8,7 @@ metadata:
   namespace: kube-system
 data:
   # Configure this with the location of your etcd cluster.
-  etcd_endpoints: "http://127.0.0.1:2379"
+  etcd_endpoints: "https://172.18.18.101:2379"
 
   # True enables BGP networking, false tells Calico to enforce
   # policy only, using native networking.
@@ -39,22 +39,22 @@ data:
 
   # If you're using TLS enabled etcd uncomment the following.
   # You must also populate the Secret below with these files.
-  etcd_ca: ""   # "/calico-secrets/etcd-ca"
-  etcd_cert: "" # "/calico-secrets/etcd-cert"
-  etcd_key: ""  # "/calico-secrets/etcd-key"
+  etcd_ca: "/calico-secrets/etcd-ca"
+  etcd_cert: "/calico-secrets/etcd-cert"
+  etcd_key: "/calico-secrets/etcd-key"
 
----
+#---
 
 # The following contains k8s Secrets for use with a TLS enabled etcd cluster.
-apiVersion: v1
-kind: Secret
-type: Opaque
-metadata:
-  name: calico-etcd-secrets
-  namespace: kube-system
-data:
-  # Populate the following files with etcd TLS configuration if desired.
-  # This self-hosted install expects three files with the following names.
-  # etcd-key: null
-  # etcd-cert: null
-  # etcd-ca: null
+#apiVersion: v1
+#kind: Secret
+#type: Opaque
+#metadata:
+#  name: calico-etcd-secrets
+#  namespace: kube-system
+#data:
+#  # Populate the following files with etcd TLS configuration if desired.
+#  # This self-hosted install expects three files with the following names.
+#  # etcd-key: null
+#  # etcd-cert: null
+#  # etcd-ca: null

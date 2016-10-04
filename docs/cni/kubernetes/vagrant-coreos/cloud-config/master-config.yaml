@@ -40,10 +40,13 @@ coreos:
         ExecStartPre=/usr/bin/chmod +x /opt/bin/kube-apiserver
         ExecStart=/opt/bin/kube-apiserver \
         --allow-privileged=true \
-        --etcd-servers=http://$private_ipv4:2379 \
+        --etcd-servers=https://$private_ipv4:2379 \
         --runtime-config=extensions/v1beta1=true,extensions/v1beta1/networkpolicies=true \
         --insecure-bind-address=0.0.0.0 \
         --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota \
+        --etcd-cafile=/tmp/etcd-certs/ca.pem \
+        --etcd-keyfile=/tmp/etcd-certs/etcd1-key.pem \
+        --etcd-certfile=/tmp/etcd-certs/etcd1.pem \
         --advertise-address=$private_ipv4 \
         --service-cluster-ip-range=10.100.0.0/24 \
         --logtostderr=true

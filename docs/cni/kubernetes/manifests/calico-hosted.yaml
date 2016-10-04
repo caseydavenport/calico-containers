@@ -23,7 +23,8 @@ spec:
         # container programs network policy and routes on each
         # host.
         - name: calico-node
-          image: quay.io/calico/node:latest
+          image: caseydavenport/node # quay.io/calico/node:latest
+          imagePullPolicy: Always
           env:
             # The location of the Calico etcd cluster.
             - name: ETCD_ENDPOINTS
@@ -91,12 +92,6 @@ spec:
                 configMapKeyRef:
                   name: calico-config
                   key: cni_network_config
-            # Directory on the host where CNI network configs live.
-            - name: CNI_NET_DIR
-              valueFrom:
-                configMapKeyRef:
-                  name: calico-config
-                  key: cni_net_dir
           volumeMounts:
             - mountPath: /host/opt/cni/bin
               name: cni-bin-dir
